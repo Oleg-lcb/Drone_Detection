@@ -1,11 +1,16 @@
 import json
+import torch
 import cv2 as cv
 
 from src.utils import load_model, path_to_tensor
 
+
+# Задействование cuda по доступности
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 class DroneDetection:
     def __init__(self, model_path):
-        self.model = load_model(model_path).to(device='cuda')
+        self.model = load_model(model_path).to(device=device)
 
     # Обнаружение на изображении
     def detect_image(self, source):
